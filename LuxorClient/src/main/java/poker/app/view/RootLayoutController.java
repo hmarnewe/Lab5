@@ -3,6 +3,7 @@ package poker.app.view;
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.UUID;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -21,6 +22,7 @@ import javafx.scene.control.ToggleGroup;
 import javafx.stage.FileChooser;
 import poker.app.MainApp;
 import pokerBase.Card;
+import pokerEnums.eBetting;
 import pokerEnums.eGame;
 import pokerEnums.eRank;
 import pokerEnums.eSuit;
@@ -43,7 +45,13 @@ public class RootLayoutController implements Initializable {
 
 	@FXML
 	private Menu mnuGame;
+	
+	private UUID gameID;
 
+
+	public UUID getGameID() {
+		return gameID;
+	}
 
 	public String getRuleName()
 	{	
@@ -77,9 +85,6 @@ public class RootLayoutController implements Initializable {
 	
 	public void BuildMenus()
 	{
-
-		
-		
 		Menu mnuGame = new Menu();
 		mnuGame.setText("Pick Game");
 		mb.getMenus().add(0,mnuGame);
@@ -97,65 +102,44 @@ public class RootLayoutController implements Initializable {
 			mnuGame.getItems().add(rmi);
 		}
 		
-
+		// Creates a new menu item so players can choose type of betting to use
+		Menu mnuBetting = new Menu();
+		mnuBetting.setText("Betting Rules");
+		mb.getMenus().add(1, mnuBetting);
 		
-		//	TODO - Lab #5...  Add a new menu item that will display the betting rules...
-		//	Two choices:
-		//	No Limit (set this as default)
-		//	Pot Limit (this is NOT the default)
-		//	Group them together with a Toggle Group
-		//	Write a method to return which is selected.. .check out getRuleName()
-
+		ToggleGroup tglGrpBetting = new ToggleGroup();
+		
+		for (eBetting eBetting: eBetting.values()){
+			RadioMenuItem rmi = new RadioMenuItem(eBetting.toString());
+			rmi.setId("Betting" + String.valueOf(eBetting.getBetting()));
+			rmi.setToggleGroup(tglGrpBetting);
+			if(eBetting.getDefault()){
+				rmi.setSelected(true);
+			}
+			mnuBetting.getItems().add(rmi);
+			
+			}
+			}
+	//Return what type of betting is used (Returns string)
+	public String getBetting(){
+		String strBettingType = null;
+		for (Menu m:mb.getMenus()){
+			if(m.getText()=="Get Betting Type"){
+				for (MenuItem mi:m.getItems()){
+					if(mi.getClass().equals(RadioMenuItem.class)){
+						RadioMenuItem rmi = (RadioMenuItem)mi;
+						if (rmi.isSelected()==true){
+							strBettingType = rmi.getText();
+							break;
+						}
+					}
+				}
+			}
+		}
+		return strBettingType;
 	}
-    
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	public void setMainApp(MainApp mainApp) {
+		
+public void setMainApp(MainApp mainApp) {
 		this.mainApp = mainApp;
 	}
 

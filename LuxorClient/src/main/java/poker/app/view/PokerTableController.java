@@ -236,16 +236,36 @@ public class PokerTableController {
 
 	public void Handle_GameState(GamePlay HubGamePlay) 
 	{
-		/*
+		
 		imgViewDealerButtonPos1.setVisible(false);
 		imgViewDealerButtonPos2.setVisible(false);
 		imgViewDealerButtonPos3.setVisible(false);
 		imgViewDealerButtonPos4.setVisible(false);
-		*/
-
-		//TODO - Lab #5: Check to see if you're the dealer..  If you are, make the imgViewDealerButtonX visible = true
 		
+		// Set player ID equal to game dealer
+		if(mainApp.getPlayer().getPlayerID() == HubGamePlay.getGameDealer()){
+			switch(mainApp.GetPlayerID()){
+			case 1:
+				//Dealer is in position 1
+				imgViewDealerButtonPos1.setVisible(true);
+				break;
+			case 2:
+				//Dealer is in position 2
+				imgViewDealerButtonPos2.setVisible(true);
+				break;
+			case 3:
+				//Dealer is in position 3
+				imgViewDealerButtonPos3.setVisible(true);
+				break;
+			case 4:
+				//Dealer is in position 4
+				imgViewDealerButtonPos4.setVisible(true);
+				break;
+			
+		}		
 	}
+	}
+
 	@FXML
 	void btnStart_Click(ActionEvent event) {
 		Action act = new Action(eAction.StartGame, mainApp.getPlayer());		
