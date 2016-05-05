@@ -80,10 +80,12 @@ public class PokerHub extends Hub {
 
 				// Determine which game is selected (from RootTableController)
 				// 1 line of code
-				eGame game = act.geteGame();
+				//#1 We saw that there was a method to get the game selected and used it
+                                  eGame game = act.geteGame();
 
 				// Get the Rule based on the game selected
 				// 1 line of code
+                                //#2 The solution to this was explained in piazza.
 				Rule rule = new Rule(game);
 
 				// The table should eventually allow multiple instances of
@@ -93,22 +95,28 @@ public class PokerHub extends Hub {
 				// be the
 				// 'Dealer'...
 				// < 5 lines of code to pick random player
+                                //#3 Using the same logic from the previous steps, we assumed that
+                                //a method with a name that tells us it will pick a random player to assign a dealer
 				Player dealer = HubPokerTable.PickRandomPlayerAtTable();
 
 				// Start a new instance of GamePlay, based on rule set and
 				// Dealer (Player.PlayerID)
 				// 1 line of code
+                                //#4 This step is similar to the previous steps: using the literal names of methods to put 
+                                //together a new instance of gameplay based on the previously set rules and dealer
 				HubGamePlay = new GamePlay(rule,dealer.getPlayerID());
 				
 				// There are 1+ players seated at the table... add these players
 				// to the game
 				// < 5 lines of code
+                                //#5 We used the methods that get players and set them in order to add players to the game
 				HubGamePlay.setGamePlayers(HubPokerTable.getHashPlayers());
 			
 				// GamePlay has a deck... create the deck based on the game's
 				// rules (the rule
 				// will have number of jokers... wild cards...
 				// 1 line of code
+                                //#6 Similar logic as previous step, but now for a deck
 				HubGamePlay.setGameDeck(new Deck(rule.GetNumberOfJokers(),rule.GetWildCards()));
 
 				// Determine the order of players and add each player in turn to
@@ -122,10 +130,12 @@ public class PokerHub extends Hub {
 				// Dealer = Position 4
 				// Order should be 1, 2, 4
 				// < 10 lines of code
+                                //#8 Found a method that sets the order and used it
 				HubGamePlay.setiActOrder(GamePlay.GetOrder(dealer.getiPlayerPosition()));
 
 				// Set PlayerID_NextToAct in GamePlay (next player after Dealer)
 				// 1 line of code
+                                //#9 Found a method that sets the next player and used it
 				HubGamePlay.setPlayerNextToAct(HubGamePlay.getPlayerByPosition(HubGamePlay.getiActOrder()[0]));
 
 				// Send the state of the game back to the players
